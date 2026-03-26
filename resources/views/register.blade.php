@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -15,43 +16,54 @@ body{
 }
 
 .card{
-    background:white;
-    width:400px;
-    padding:40px;
-    border-radius:12px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+background:white;
+width:400px;
+padding:40px;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
 }
 
 .logo{
-    text-align:center;
-    font-size:28px;
-    color:#d88fd8;
-    margin-bottom:10px;
+text-align:center;
+font-size:28px;
+color:#d88fd8;
+margin-bottom:10px;
 }
 
 .subtitle{
-    text-align:center;
-    margin-bottom:30px;
+text-align:center;
+margin-bottom:30px;
 }
 
 input{
-    width:100%;
-    padding:12px;
-    margin-bottom:15px;
-    border:1px solid #ddd;
-    border-radius:6px;
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:1px solid #ddd;
+border-radius:6px;
 }
 
 button{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:6px;
-    background:linear-gradient(90deg,#a18cd1,#fbc2eb);
-    color:white;
-    font-weight:bold;
+width:100%;
+padding:12px;
+border:none;
+border-radius:6px;
+background:linear-gradient(90deg,#a18cd1,#fbc2eb);
+color:white;
+font-weight:bold;
 }
-</style>
+
+.link{
+text-align:center;
+margin-top:15px;
+}
+
+.link a{
+color:#7c5cc4;
+text-decoration:none;
+font-size:14px;
+} </style>
+
 </head>
 
 <body>
@@ -63,26 +75,23 @@ button{
 <form method="POST" action="/register">
     @csrf
 
-    <input type="text" name="name" placeholder="お名前">
-    <input type="email" name="email" placeholder="メールアドレス">
-    <input type="password" name="password" placeholder="パスワード">
+<input type="text" name="name" placeholder="お名前">
+<input type="email" name="email" placeholder="メールアドレス">
+<input type="password" name="password" placeholder="パスワード">
 
-    <button type="submit">次に進む</button>
-    <form method="POST" action="/register">
-    @csrf
+<button type="submit">次に進む</button>
 
-    <!-- 入力欄 -->
-    ...
 
-    <button type="submit">次に進む</button>
 </form>
 
-<p>
+<div class="link">
     すでに登録済みの方は  
     <a href="/login">ログインはこちら</a>
-</p>
+</div>
 
-</form>
+<div class="link">
+    <a href="/contact">お問い合わせはこちら</a>
+</div>
 
 </div>
 

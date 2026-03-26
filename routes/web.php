@@ -12,6 +12,21 @@ Route::post('/logout', [PigryController::class, 'logout'])->name('logout');
 Route::get('/register', [PigryController::class, 'register'])->name('register');
 Route::post('/register', [PigryController::class, 'store']);
 
+use Illuminate\Http\Request;
+
+Route::post('/contact/confirm', function (Request $request) {
+    return view('contact_confirm', [
+        'name' => $request->name,
+        'gender' => $request->gender,
+        'email' => $request->email,
+        'tel' => $request->tel,
+        'address' => $request->address,
+        'building' => $request->building,
+        'type' => $request->type,
+        'content' => $request->content,
+    ]);
+});
+
 
 /* ログイン後のみ */
 Route::middleware('auth')->group(function () {
@@ -30,5 +45,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/weight/{id}/edit', [WeightController::class, 'edit'])->name('weight.edit');
     Route::post('/weight/{id}/update', [WeightController::class, 'update'])->name('weight.update');
     Route::post('/weight/{id}/delete', [WeightController::class, 'delete'])->name('weight.delete');
+
+    Route::get('/contact', function () {
+    return view('contact');
+});
 
 });
