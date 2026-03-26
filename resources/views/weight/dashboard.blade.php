@@ -21,9 +21,25 @@
     </div>
 </div>
 
+<!-- 検索 -->
+<div class="search-box">
+    <form method="GET" action="/dashboard">
+        <div class="search-group">
+            <input type="date" name="from">
+            <span>〜</span>
+            <input type="date" name="to">
+
+            <button class="search-btn">検索</button>
+            <a href="/dashboard" class="reset-btn">リセット</a>
+        </div>
+    </form>
+</div>
+
 <div class="table-box">
 
-<a href="/weight/create" class="add-btn">データ追加</a>
+<a href="{{ route('weight.create') }}" class="add-btn">
+    データ追加
+</a>
 
 <br><br>
 
@@ -39,8 +55,8 @@
 @foreach($weights as $weight)
 <tr>
     <td>{{ $weight->date }}</td>
-    <td>{{ $weight->weight }}</td>
-    <td>{{ $weight->calories }}</td>
+    <td>{{ $weight->weight }}kg</td>
+    <td>{{ $weight->calories }}cal</td>
     <td>{{ $weight->exercise_time }}</td>
     <td>
         <a href="/weight/{{ $weight->id }}">詳細</a>

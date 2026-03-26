@@ -9,6 +9,10 @@ class Weight extends Model
     protected $fillable = [
     'user_id',
     'weight',
-    'target_weight'
+    'target_weight',
+    'calories',
+    'exercise_time',
+    'exercise_content'
+
 ];
 }

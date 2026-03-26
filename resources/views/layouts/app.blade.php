@@ -2,7 +2,9 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+
     <title>Pigly</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <style>
         body{
             background:#f5f5f7;
@@ -132,6 +134,20 @@
     top:50%;
     transform:translateY(-50%);
     color:#666;
+}
+table th{
+    text-align:left;
+    padding-bottom:10px;
+    border-bottom:2px solid;
+    border-image: linear-gradient(to right,#a18cd1,#fbc2eb) 1;
+}
+
+table td{
+    padding:15px 0;
+}
+
+table td:last-child{
+    text-align:right;
 }
 
     </style>

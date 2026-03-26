@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Weight;
-use App\Http\Controllers\Controller;  // ←これを追加
+use App\Http\Controllers\Controller;
 
 class WeightController extends Controller
 {
@@ -13,11 +13,23 @@ class WeightController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
-{
-    $weights = Weight::where('user_id', auth()->id())->get();
-    return view('weight.dashboard', compact('weights'));
-}
+    public function index(Request $request)
+    {
+       $query = Weight::query();
+
+    if ($request->from) {
+        $query->whereDate('date', '>=', $request->from);
+    }
+
+    if ($request->to) {
+        $query->whereDate('date', '<=', $request->to);
+    }
+
+    $weights = $query->get();
+
+    return view('weight.dashboard', compact('weights')); 
+
+    }
 
     public function create()
     {
@@ -27,18 +39,23 @@ class WeightController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'weight' => 'required|numeric|between:0,999.9',
-            'target_weight' => 'required|numeric|between:0,999.9',
+            'date' => 'required|date',
+            'weight' => 'required|numeric',
+            'calories' => 'required|numeric',
+            'exercise_time' => 'required',
+            'exercise_content' => 'nullable',
         ]);
 
         Weight::create([
             'user_id' => auth()->id(),
+            'date' => $request->date,
             'weight' => $request->weight,
-            'target_weight' => $request->target_weight,
+            'calories' => $request->calories,
+            'exercise_time' => $request->exercise_time,
+            'exercise_content' => $request->exercise_content,
         ]);
 
-        return redirect('/dashboard')
-            ->with('success','アカウント登録が完了しました。');
+        return redirect('/dashboard');
     }
 
     public function edit($id)
@@ -50,15 +67,21 @@ class WeightController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'weight' => 'required|numeric|between:0,999.9',
-            'target_weight' => 'required|numeric|between:0,999.9',
+            'date' => 'required|date',
+            'weight' => 'required|numeric',
+            'calories' => 'required|numeric',
+            'exercise_time' => 'required',
+            'exercise_content' => 'nullable',
         ]);
 
         $weight = Weight::find($id);
 
         $weight->update([
+            'date' => $request->date,
             'weight' => $request->weight,
-            'target_weight' => $request->target_weight,
+            'calories' => $request->calories,
+            'exercise_time' => $request->exercise_time,
+            'exercise_content' => $request->exercise_content,
         ]);
 
         return redirect('/dashboard');
@@ -69,9 +92,10 @@ class WeightController extends Controller
         Weight::find($id)->delete();
         return redirect('/dashboard');
     }
+
     public function show($id)
-{
-    $weight = Weight::find($id);
-    return view('weight.show', compact('weight'));
-}
+    {
+        $weight = Weight::find($id);
+        return view('weight.show', compact('weight'));
+    }
 }
