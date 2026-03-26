@@ -14,10 +14,10 @@ class WeightController extends Controller
     }
 
     public function index()
-    {
-        $weights = Weight::where('user_id', auth()->id())->get();
-        return view('weight.list', compact('weights'));
-    }
+{
+    $weights = Weight::where('user_id', auth()->id())->get();
+    return view('weight.dashboard', compact('weights'));
+}
 
     public function create()
     {
@@ -69,4 +69,9 @@ class WeightController extends Controller
         Weight::find($id)->delete();
         return redirect('/dashboard');
     }
+    public function show($id)
+{
+    $weight = Weight::find($id);
+    return view('weight.show', compact('weight'));
+}
 }

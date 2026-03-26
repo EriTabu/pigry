@@ -1,67 +1,8 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<title>体重編集</title>
+@extends('layouts.app')
 
-<style>
-body{
-margin:0;
-font-family:sans-serif;
-background:rgba(0,0,0,0.3);
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
+@section('content')
 
-.modal{
-background:white;
-width:500px;
-padding:30px;
-border-radius:10px;
-}
-
-.form-group{
-margin-bottom:15px;
-}
-
-label{
-display:block;
-margin-bottom:5px;
-}
-
-input,textarea{
-width:100%;
-padding:10px;
-border:1px solid #ddd;
-border-radius:5px;
-}
-
-.buttons{
-display:flex;
-justify-content:space-between;
-margin-top:20px;
-}
-
-.back{
-background:#ddd;
-border:none;
-padding:10px 20px;
-border-radius:5px;
-}
-
-.submit{
-background: linear-gradient(90deg,#a18cd1,#fbc2eb);
-border:none;
-padding:10px 20px;
-border-radius:5px;
-color:white;
-}
-</style>
-</head>
-
-<body>
+<div class="modal-overlay">
 
 <div class="modal">
 
@@ -71,41 +12,45 @@ color:white;
 @csrf
 
 <div class="form-group">
-<label>日付</label>
-<input type="date" name="date" value="{{ $weight->created_at->format('Y-m-d') }}">
+<label>日付 <span class="required">必須</span></label>
+<input type="date" name="date" value="{{ $weight->date }}">
 </div>
 
 <div class="form-group">
-<label>体重</label>
+<label>体重 <span class="required">必須</span></label>
+
+<div class="input-row">
 <input type="text" name="weight" value="{{ $weight->weight }}">
+<span>kg</span>
+</div>
+
 </div>
 
 <div class="form-group">
-<label>摂取カロリー</label>
-<input type="text" name="calorie">
+<label>摂取カロリー <span class="required">必須</span></label>
+<div class="input-row">
+<input type="text" name="calories" value="{{ $weight->calories }}">
+<span>cal</span>
 </div>
 
 <div class="form-group">
-<label>運動時間</label>
-<input type="text" name="exercise_time">
+<label>運動時間 <span class="required">必須</span></label>
+<input type="text" name="exercise_time" value="{{ $weight->exercise_time }}">
 </div>
 
 <div class="form-group">
 <label>運動内容</label>
-<textarea name="exercise_content"></textarea>
+<textarea name="exercise_content">{{ $weight->exercise_content }}</textarea>
 </div>
 
-<div class="buttons">
-<a href="/dashboard">
-<button type="button" class="back">戻る</button>
-</a>
-
-<button type="submit" class="submit">更新</button>
+<div class="btn-group">
+<a href="/dashboard" class="btn-back">戻る</a>
+<button type="submit" class="btn-submit">更新</button>
 </div>
 
 </form>
 
 </div>
+</div>
 
-</body>
-</html>
+@endsection

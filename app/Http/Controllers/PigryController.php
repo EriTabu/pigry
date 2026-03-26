@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class PigryController extends Controller
 {
@@ -30,4 +31,28 @@ class PigryController extends Controller
 
         return redirect('/weight/create');
     }
+    public function loginForm()
+{
+    return view('auth.login');
+}
+
+public function login(Request $request)
+{
+    $credentials = $request->only('email','password');
+
+    if(Auth::attempt($credentials)){
+        return redirect('/dashboard');
+    }
+
+    return back()->with('error','ログイン情報が正しくありません');
+}
+
+public function logout()
+{
+    Auth::logout();
+    return redirect('/login');
+    // ユーザー保存処理
+
+    return redirect('/login');
+}
 }

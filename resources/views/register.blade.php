@@ -68,6 +68,20 @@ button{
     <input type="password" name="password" placeholder="パスワード">
 
     <button type="submit">次に進む</button>
+    <form method="POST" action="/register">
+    @csrf
+
+    <!-- 入力欄 -->
+    ...
+
+    <button type="submit">次に進む</button>
+</form>
+
+<p>
+    すでに登録済みの方は  
+    <a href="/login">ログインはこちら</a>
+</p>
+
 </form>
 
 </div>
