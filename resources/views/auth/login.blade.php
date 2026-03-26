@@ -23,12 +23,29 @@ width:400px;
 text-align:center;
 }
 
+.logo{
+font-size:28px;
+color:#d88fd8;
+margin-bottom:5px;
+}
+
+.subtitle{
+margin-bottom:20px;
+}
+
 input{
 width:100%;
 padding:12px;
-margin-top:15px;
+margin-top:10px;
 border:1px solid #ddd;
 border-radius:8px;
+}
+
+.error{
+color:red;
+font-size:12px;
+text-align:left;
+margin-top:5px;
 }
 
 button{
@@ -46,17 +63,21 @@ background: linear-gradient(90deg,#a18cd1,#fbc2eb);
 <body>
 
 <div class="card">
-<h2>PiGLy</h2>
-
-@if(session('error'))
-<p style="color:red">{{ session('error') }}</p>
-@endif
+<div class="logo">PiGLy</div>
+<div class="subtitle">ログイン</div>
 
 <form method="POST" action="/login">
 @csrf
 
-<input type="email" name="email" placeholder="メールアドレス">
+<input type="email" name="email" placeholder="メールアドレス" value="{{ old('email') }}">
+@error('email')
+<div class="error">{{ $message }}</div>
+@enderror
+
 <input type="password" name="password" placeholder="パスワード">
+@error('password')
+<div class="error">{{ $message }}</div>
+@enderror
 
 <button type="submit">ログイン</button>
 

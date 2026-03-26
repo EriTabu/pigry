@@ -15,20 +15,19 @@ class WeightController extends Controller
 
     public function index(Request $request)
     {
-       $query = Weight::query();
+        $query = Weight::query();
 
-    if ($request->from) {
-        $query->whereDate('date', '>=', $request->from);
-    }
+        if ($request->from) {
+            $query->whereDate('date', '>=', $request->from);
+        }
 
-    if ($request->to) {
-        $query->whereDate('date', '<=', $request->to);
-    }
+        if ($request->to) {
+            $query->whereDate('date', '<=', $request->to);
+        }
 
-    $weights = $query->get();
+        $weights = $query->get();
 
-    return view('weight.dashboard', compact('weights')); 
-
+        return view('weight.dashboard', compact('weights')); 
     }
 
     public function create()
@@ -44,6 +43,14 @@ class WeightController extends Controller
             'calories' => 'required|numeric',
             'exercise_time' => 'required',
             'exercise_content' => 'nullable',
+        ],[
+            'date.required' => '日付を入力してください',
+            'date.date' => '正しい日付を入力してください',
+            'weight.required' => '体重を入力してください',
+            'weight.numeric' => '体重は数値で入力してください',
+            'calories.required' => '摂取カロリーを入力してください',
+            'calories.numeric' => '摂取カロリーは数値で入力してください',
+            'exercise_time.required' => '運動時間を入力してください',
         ]);
 
         Weight::create([
@@ -60,7 +67,7 @@ class WeightController extends Controller
 
     public function edit($id)
     {
-        $weight = Weight::find($id);
+        $weight = Weight::findOrFail($id);
         return view('weight.edit', compact('weight'));
     }
 
@@ -72,9 +79,17 @@ class WeightController extends Controller
             'calories' => 'required|numeric',
             'exercise_time' => 'required',
             'exercise_content' => 'nullable',
+        ],[
+            'date.required' => '日付を入力してください',
+            'date.date' => '正しい日付を入力してください',
+            'weight.required' => '体重を入力してください',
+            'weight.numeric' => '体重は数値で入力してください',
+            'calories.required' => '摂取カロリーを入力してください',
+            'calories.numeric' => '摂取カロリーは数値で入力してください',
+            'exercise_time.required' => '運動時間を入力してください',
         ]);
 
-        $weight = Weight::find($id);
+        $weight = Weight::findOrFail($id);
 
         $weight->update([
             'date' => $request->date,
@@ -89,13 +104,13 @@ class WeightController extends Controller
 
     public function delete($id)
     {
-        Weight::find($id)->delete();
+        Weight::findOrFail($id)->delete();
         return redirect('/dashboard');
     }
 
     public function show($id)
     {
-        $weight = Weight::find($id);
+        $weight = Weight::findOrFail($id);
         return view('weight.show', compact('weight'));
     }
 }

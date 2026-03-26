@@ -1,10 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Http\Controllers\PigryController;
 use App\Http\Controllers\WeightController;
 
-/* ログイン・登録 */
+/*
+|--------------------------------------------------------------------------
+| トップ画面 → register にリダイレクト
+|--------------------------------------------------------------------------
+*/
+Route::redirect('/', '/register');
+
+/*
+|--------------------------------------------------------------------------
+| ログイン・登録
+|--------------------------------------------------------------------------
+*/
 Route::get('/login', [PigryController::class, 'loginForm'])->name('login');
 Route::post('/login', [PigryController::class, 'login']);
 Route::post('/logout', [PigryController::class, 'logout'])->name('logout');
@@ -12,7 +24,14 @@ Route::post('/logout', [PigryController::class, 'logout'])->name('logout');
 Route::get('/register', [PigryController::class, 'register'])->name('register');
 Route::post('/register', [PigryController::class, 'store']);
 
-use Illuminate\Http\Request;
+/*
+|--------------------------------------------------------------------------
+| お問い合わせ
+|--------------------------------------------------------------------------
+*/
+Route::get('/contact', function () {
+    return view('contact');
+});
 
 Route::post('/contact/confirm', function (Request $request) {
     return view('contact_confirm', [
@@ -27,27 +46,23 @@ Route::post('/contact/confirm', function (Request $request) {
     ]);
 });
 
+/*
+|--------------------------------------------------------------------------
+| 体重管理
+|--------------------------------------------------------------------------
+*/
+Route::get('/dashboard', [WeightController::class, 'index'])->name('dashboard');
 
-/* ログイン後のみ */
-Route::middleware('auth')->group(function () {
+Route::get('/weight', [WeightController::class, 'index']);
 
-    Route::get('/dashboard', [WeightController::class, 'index'])->name('dashboard');
+Route::get('/weight/create', [WeightController::class, 'create'])->name('weight.create');
 
-    Route::get('/weight', [WeightController::class, 'index']);
+Route::post('/weight', [WeightController::class, 'store'])->name('weight.store');
 
-    // ★ここ重要（name追加）
-    Route::get('/weight/create', [WeightController::class, 'create'])->name('weight.create');
+Route::get('/weight/{id}', [WeightController::class, 'show'])->name('weight.show');
 
-    // ★ここも修正（name追加）
-    Route::post('/weight', [WeightController::class, 'store'])->name('weight.store');
+Route::get('/weight/{id}/edit', [WeightController::class, 'edit'])->name('weight.edit');
 
-    Route::get('/weight/{id}', [WeightController::class, 'show'])->name('weight.show');
-    Route::get('/weight/{id}/edit', [WeightController::class, 'edit'])->name('weight.edit');
-    Route::post('/weight/{id}/update', [WeightController::class, 'update'])->name('weight.update');
-    Route::post('/weight/{id}/delete', [WeightController::class, 'delete'])->name('weight.delete');
+Route::post('/weight/{id}/update', [WeightController::class, 'update'])->name('weight.update');
 
-    Route::get('/contact', function () {
-    return view('contact');
-});
-
-});
+Route::post('/weight/{id}/delete', [WeightController::class, 'delete'])->name('weight.delete');

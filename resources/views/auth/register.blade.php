@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -38,9 +37,15 @@ margin-bottom:30px;
 input{
 width:100%;
 padding:12px;
-margin-bottom:15px;
+margin-bottom:5px;
 border:1px solid #ddd;
 border-radius:6px;
+}
+
+.error{
+color:red;
+font-size:12px;
+margin-bottom:10px;
 }
 
 button{
@@ -51,6 +56,7 @@ border-radius:6px;
 background:linear-gradient(90deg,#a18cd1,#fbc2eb);
 color:white;
 font-weight:bold;
+margin-top:10px;
 }
 
 .link{
@@ -62,7 +68,8 @@ margin-top:15px;
 color:#7c5cc4;
 text-decoration:none;
 font-size:14px;
-} </style>
+}
+</style>
 
 </head>
 
@@ -75,12 +82,22 @@ font-size:14px;
 <form method="POST" action="/register">
     @csrf
 
-<input type="text" name="name" placeholder="お名前">
-<input type="email" name="email" placeholder="メールアドレス">
-<input type="password" name="password" placeholder="パスワード">
+    <input type="text" name="name" placeholder="お名前" value="{{ old('name') }}">
+    @error('name')
+        <div class="error">{{ $message }}</div>
+    @enderror
 
-<button type="submit">次に進む</button>
+    <input type="email" name="email" placeholder="メールアドレス" value="{{ old('email') }}">
+    @error('email')
+        <div class="error">{{ $message }}</div>
+    @enderror
 
+    <input type="password" name="password" placeholder="パスワード">
+    @error('password')
+        <div class="error">{{ $message }}</div>
+    @enderror
+
+    <button type="submit">次に進む</button>
 
 </form>
 
